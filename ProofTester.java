@@ -36,7 +36,7 @@ public class ProofTester
 		 	if ((new_rule.getBody().length == 0) && (!C.contains(new_rule.getHead())))
 		 	{
 		 		C.add(new_rule.getHead()); //add atom to C
-		 		x = 0; //reset counter
+		 		x = 0; //reset counter (this can be x = 0 or x = -1)
 		 	 }
 		 	
 		 	else if (C.contains(new_rule.getHead()))
@@ -44,13 +44,14 @@ public class ProofTester
 		 			continue; //do nothing
 		 		}
 		 	
-		 	else if ((new_rule.getBody().length !=0) && (!C.contains(new_rule.getHead()))) {
+		 	else if ((new_rule.getBody().length !=0) && (!C.contains(new_rule.getHead()))) 
+		 	{
 		 		// checks if each atom in Body is in C and then adds them to C accordingly
-		 
+		 		boolean doThis = true;
 		 		
 		 		int i;
-		 			for (i = 0; i < new_rule.getBody().length; i++) 
-		 			{
+		 			for (i = 0; i < new_rule.getBody().length; i++) //for each atom at i in Body
+		 			{ 
 		 				Atom atom = new_rule.getBody()[i];
 		 					if (C.contains(atom)) 
 		 						{
@@ -59,19 +60,23 @@ public class ProofTester
 		 				
 		 					else if (!C.contains(atom))
 		 						{
+		 							doThis = false;
 		 							break;
+		 							
 		 						}
 		 				
-		 				C.add(new_rule.getHead()); //add atom to C
-		 				x = 0; //reset counter
+		 				
 		 			}
-		 				 
+		 			if (doThis) {
+		 				C.add(new_rule.getHead()); //add atom to C
+		 				x = 0;
+		 			}//reset counter (this can be x = 0 or x = -1)
 		 	}
 		 		
 			
-			}		
-				
+		}		
 			
+			canSelect = false;	
 		}					
 		
 	// RETURN OUR LIST OF ENTAILED (AND THEREFORE DERIVED) ATOMS
@@ -92,8 +97,8 @@ public class ProofTester
 		Atom a = new Atom("a");
 		Atom b = new Atom("b");
 		Atom c = new Atom("c");
-		Atom d = new Atom("d");
 		Atom e = new Atom("e");
+		Atom d = new Atom("d");
 		Atom f = new Atom("f");
 		Atom g = new Atom("g");
 		
@@ -134,7 +139,8 @@ public class ProofTester
 		 * In this case, [a, b, c, d, e].
 		 * (The order doesn't matter.)
 		 */
-		System.out.println(derived);
+		System.out.println("C = " + derived);
 	}
 
+	
 }
